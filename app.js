@@ -285,8 +285,8 @@ $(document).ready(function(){
 
 
   function cartLogic(){
-
-    cartContent.addEventListener("click", e => {
+// tính toán trong cart
+ cartContent.addEventListener("click", e => {
       const target = e.target.closest("span");
       const targetElement = target.classList.contains("remove-item");
     
@@ -296,30 +296,36 @@ $(document).ready(function(){
         const id = parseInt(target.dataset.id);
         removeItem(id);
         cartContent.removeChild(target.parentElement);
-      } 
-        if (target.classList.contains("increase")) {
-          const id = parseInt(target.dataset.id);
-          let tempItem = cart.find(item => item.id === id);
-          tempItem.amount++;
-          setItemValues(cart);
-          Storage.saveCart(cart);
-          target.nextElementSibling.innerText = tempItem.amount;
       }
-        if (target.classList.contains("decrease")) {
-          const id = parseInt(target.dataset.id, 10);
-          let tempItem = cart.find(item => item.id === id);
-          tempItem.amount--;
-        } 
-       if (tempItem.amount > 0) {
-          Storage.saveCart(cart);
-          setItemValues(cart);
-          target.previousElementSibling.innerText = tempItem.amount;
-        } 
-        else {
-          removeItem(id);
-          cartContent.removeChild(target.parentElement.parentElement);
-        } 
-      
+      else{
+           if (target.classList.contains("increase")) {
+            const id = parseInt(target.dataset.id);
+            let tempItem = cart.find(item => item.id === id);
+            tempItem.amount++;
+            setItemValues(cart);
+            Storage.saveCart(cart);
+            target.nextElementSibling.innerText = tempItem.amount;
+          }
+          else{
+            if (target.classList.contains("decrease")) {
+              const id = parseInt(target.dataset.id);
+              let tempItem = cart.find(item => item.id === id);
+              tempItem.amount--;
+              console.log("tổng trừ: ", tempItem.amount)
+              if (tempItem.amount > 0) {
+                  Storage.saveCart(cart);
+                  setItemValues(cart);
+                  target.previousElementSibling.innerText = tempItem.amount;
+              } 
+              else {
+                removeItem(id);
+                cartContent.removeChild(target.parentElement.parentElement);
+              } 
+          }
+        }
+      } 
+      if(cart.length == 0)
+        hide()
     });
   }
 
