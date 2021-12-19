@@ -285,8 +285,8 @@ $(document).ready(function(){
 
 
   function cartLogic(){
-// tính toán trong cart
- cartContent.addEventListener("click", e => {
+
+    cartContent.addEventListener("click", e => {
       const target = e.target.closest("span");
       const targetElement = target.classList.contains("remove-item");
     
@@ -345,9 +345,12 @@ $(document).ready(function(){
     Storage.saveCart(cart);
 
     let button = singleButton(id);
+    let opacity = button.parentNode.parentNode.parentNode.parentNode.querySelector(".image-container div")
+    opacity.style.display = "none"
     button.disabled = false;
     button.innerText = "Add to Cart";
-     button.classList.remove("state")
+    button.classList.remove("state")
+
   }
 
   function singleButton(id) {
